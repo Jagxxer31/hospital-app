@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>New Doctor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      {% for message in messages %}
+        alert("{{ message|replace('"','\\"') }}");
+      {% endfor %}
+    </script>
+  {% endif %}
+{% endwith %}
+<div class="mb">
+    <h1>
+      Add a new Doctor:
+    </h1>
+</div>
+<div class="box">
+  <main class="login-card" role="main" aria-labelledby="login-title">
+    <form action="{{ url_for('newdoc') }}" method="POST">
+      <div>
+        <label>Full name</label>
+        <input name="name" type="text">
+      </div>
+
+      <div>
+        <label>Department</label>
+        <input name="dept" type="text">
+      </div>
+
+      <div>
+        <label>Password</label>
+        <input name="passw" type="password">
+      </div>
+
+      <div>
+        <label>Experience (in years)</label>
+        <input name="exp" type="text">
+      </div>
+
+      <div>
+        <label>Description</label>
+        <textarea name="dscr" rows="2"></textarea>
+      </div>
+
+      <div class="row"></div>
+
+      <div style="display: flex; gap: 10px;">
+        <button type="submit">Create</button>   
+        <button onclick="history.back()" type="button">Cancel</button>
+      </div>
+    </form>
+    
+  </main>
+  
+  </div>
+</body>
+</html>

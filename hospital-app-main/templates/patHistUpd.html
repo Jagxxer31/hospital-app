@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Update Patient History</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+<div class="ddashH" style="margin-bottom: 20px; border: 0;">
+        <div class="doc"><h1>Patient History</h1></div>
+        <div class="logout">
+            <div style="display: flex; justify-content: end;">
+                  <button onclick="history.back()" type="button">Back</button>
+            </div>
+        </div>
+    </div>
+<div class="box" >
+  <main class="login-card" role="main" aria-labelledby="login-title">
+
+
+    <form action="{{ url_for('pHistUpd', p_id = pid, d_id = did) }}" method="POST">
+      <div>
+        <label>Tests</label>
+        <input id="tests" name="tests" type="text" >
+      </div>
+  
+      <div>
+        <label>Diagnosis</label>
+        <input id="diag" name="diag" type="text" >
+      </div>
+
+      <div>
+        <label>Prescription</label>
+        <input id="pres" name="pres" type="text" >
+      </div>
+
+      <div>
+        <label>Medicines</label>
+        <input id="meds" name="meds" type="text" >
+      </div>
+
+      <div class="row"></div>
+
+      <div style="display: flex; gap: 20px;">
+        <button type="submit">Create</button>
+      </div>
+
+      
+    </form>
+  </main>
+  </div>
+</body>
+</html>

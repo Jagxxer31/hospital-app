@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="ddashH w" style="margin-bottom: 20px;">
+        <div class="doc"><h1>Admin Dashboard</h1></div>
+        <div class="logout">
+            <div style="display: flex; justify-content: end;">
+                <form action="/adm" method=POST style="display: flex; flex-direction: row;">
+                    <input style="height: 27px;" type="text" name="st" placeholder="Patient, Doctor or Department">
+                    <button type="submit">Search</button>
+                    <div>
+                        <a href="/">
+                            <button type="button">Logout</button>
+                        </a>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+    <h2 class="mb">Welcome Admin,</h2>
+    <div class="regdocs mb w">
+        <div style="display: flex; width: 100%; justify-content: center;">
+            <div class="ddashH" style="border: 0px; height: 10px;">
+                <h3>Registered Doctors</h3>
+                <div class="logout">
+                    <div style="display: flex; justify-content: end;">
+                        <form action="{{ url_for('newdoc') }}" method="GET">
+                            <button type="submit">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            {% for d in docs %}
+            <div class="pat ddashH w" style="height: 10px; border:1px solid;">
+                <div class="doc">{{d.name}}</div>
+                <div class="logout">
+                    <div style="display: flex; justify-content: end; gap:10px">
+                        <form action="{{ url_for('editdoc',id = d.id) }}" method="GET">
+                            <button type="submit">Edit</button>
+                        </form>
+                        <form action="{{ url_for('deldoc',id = d.id) }}" method="POST">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="regdocs mb w">
+        <div style="display: flex; width: 100%; justify-content: center;">
+            <div class="ddashH" style="border: 0px; height: 10px;">
+                <h3>Registered Patients</h3>
+                <div class="logout">
+                    <div style="display: flex; justify-content: end;">
+                        <form action="{{ url_for('newpat') }}" method="GET">
+                            <button type="submit">Create</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            {% for p in pats %}
+            <div class="pat ddashH w" style="height: 10px; border:1px solid;">
+                <div class="doc">{{p.name}}</div>
+                <div class="logout">
+                    <div style="display: flex; justify-content: end; gap:10px">
+                        
+                        <form action="{{ url_for('pHist',pname = p.name) }}" method="GET">
+                            <button type="submit">View</button>
+                        </form>
+                        <form action="{{ url_for('pdel',pname = p.name) }}" method="GET">
+                            <button type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="regdocs w" style="border-bottom: 0;">
+        <div style="display: flex; width: 100%; justify-content: center;">
+            <div class="ddashH" style="border: 0px; height: 10px;">
+                <h3>Upcoming Appointments</h3>
+                <div class="logout">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <table border="2" style="width: 100%; text-align: center; margin-bottom: 30px; border-collapse: collapse;" class="w">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Department</th>
+                <th>Time</th>
+                <th>Patient History</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in appts %}
+            <tr>
+                <td>{{ a.date }}</td>
+                <td>{{ a.p.name }}</td>
+                <td>{{ a.d.name }}</td>
+                <td>{{ a.d.dept }}</td>
+                <td>{{ a.time }}</td>
+                <td style="padding: 2px;">
+                    <form action="{{ url_for('pHist',pname = a.p.name) }}" method="GET">
+                        <button style="background-color: white; color: black;" type="submit">View</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr >
+                <td colspan="6" style="padding: 5px;">No Appointments yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="regdocs w" style="border-bottom: 0;">
+        <div style="display: flex; width: 100%; justify-content: center;">
+            <div class="ddashH" style="border: 0px; height: 10px;">
+                <h3>Appointments History</h3>
+                <div class="logout">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <table border="2" style="width: 100%; text-align: center; margin-bottom: 30px; border-collapse: collapse;" class="w">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Department</th>
+                <th>Time</th>
+                <th>Status</th>
+                <th>Patient History</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in comp %}
+            <tr>
+                <td>{{ a.date }}</td>
+                <td>{{ a.p.name }}</td>
+                <td>{{ a.d.name }}</td>
+                <td>{{ a.d.dept }}</td>
+                <td>{{ a.time }}</td>
+                <td>{{ a.status }}</td>
+                <td style="padding: 2px;">
+                    <form action="{{ url_for('pHist',pname = a.p.name) }}" method="GET">
+                        <button style="background-color: white; color: black;" type="submit">View</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr >
+                <td colspan="6" style="padding: 5px;">No Appointments yet</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="height: 1px;"></div>
+</body>
+</html>

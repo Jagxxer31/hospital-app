@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="ddashH" style="margin-bottom: 20px;">
+        <div class="doc"><h1>Doctor Dashboard</h1></div>
+        <div class="logout">
+            <div style="display: flex; gap: 10px; justify-content: end;">
+                <form action="{{ url_for('updAv', di=did) }}" method="GET">
+                    <button type="submit">Update availability</button>
+                </form>
+                <a href="/">
+                    <button type="button">Logout</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <h2>Welcome, {{ dname }}</h2>
+
+    <div class="docappts mb" style="margin-top: 20px;">
+        <h3>Upcoming appointments</h3>
+        <div style="display: flex; justify-content: center;">
+            <table border="2" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Patient</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in appts %}
+                    <tr>
+                        <td>{{ a.date }}</td>
+                        <td>{{ a.time }}</td>
+                        <td>{{ a.p.name }}</td>
+                        <td style="display: flex; width: 100%; justify-content: center; gap: 10px; padding: 5px;">
+                            <form action="{{ url_for('pHistUpd', p_id=a.p_id, d_id=a.d_id) }}" method="GET">
+                                <button type="submit">Update History</button>
+                            </form>
+                            <form action="{{ url_for('pAppntComp', id=a.id) }}" method="POST">
+                                <button type="submit">Done</button>
+                            </form>
+                            <form action="{{ url_for('pAppntCancel', id=a.id) }}" method="POST">
+                                <button type="submit">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4">No Appointments yet</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="assedpats">
+        <h3>Assigned Patients</h3>
+        {% for a in appts %}
+        <div class="pat ddashH" style="height: 10px; border: 1px solid;">
+            <div class="doc">{{ a.p.name }}</div>
+            <div class="logout">
+                <div style="display: flex; justify-content: end;">
+                    <form action="{{ url_for('pHist', pname=a.p.name) }}" method="GET">
+                        <button type="submit">View</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="pat ddashH" style="height: 10px; border: 1px solid;">
+            <div class="doc">No Patients yet</div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
