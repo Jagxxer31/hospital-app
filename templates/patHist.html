@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="ddashH" style="margin-bottom: 20px; border: 0;">
+        <div class="doc"><h1>Patient History</h1></div>
+        <div class="logout">
+            <div style="display: flex; justify-content: end;">
+                <button onclick="history.back()">Back</button>
+            </div>
+        </div>
+    </div>
+    <div class="mb">
+        <p style="margin-left:20px ;"><span style="font-weight: bold;">Patient name:</span> {{p}}</p>
+    </div>
+    <div style="display: flex; justify-content: center;">
+        <table border="2" style="width: 80%;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Department</th>
+                    <th>Tests</th>
+                    <th>Diagnosis</th>
+                    <th>Prescription</th>
+                    <th>Medicines</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for h in hist %}
+                <tr>
+                    <td>{{ h.date }}</td>
+                    <td>{{ h.d.name }}</td>
+                    <td>{{ h.d.dept }}</td>
+                    <td>{{ h.test }}</td>
+                    <td>{{ h.diag }}</td>
+                    <td>{{ h.presc }}</td>
+                    <td>{{ h.meds }}</td>
+                </tr>
+                {% else %}
+                <td colspan="5">No history.</td>
+                
+                {% endfor %}
+            </tbody>
+        </table>
+            
+    </div>
+
+</body>
+</html>

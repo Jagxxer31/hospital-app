@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Info</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body style="padding: 50px;">
+
+    <div class="ddashH" style="margin-bottom: 20px; border: 0;">
+        <div class="doc" style="width: 300px;">
+            <h1>Doctor Details</h1>
+        </div>
+        <div style="display: flex; justify-content: end; flex:1;">
+            <button onclick="history.back()" type="button">Back</button>
+        </div>
+    </div>
+
+    <div style="display: flex; justify-content: center;">
+        <div style="display: flex; width: 600px;">
+            <div style="flex: 2;">
+                <p style="font-size: 20px;">
+                    <span style="font-weight: bold;">Name:</span> {{ d.name }}<br>
+                    <span style="font-weight: bold;">Department:</span> {{ d.dept }}<br>
+                    <span style="font-weight: bold;">Experience:</span> {{ d.exp }} years<br>
+                </p>
+
+                {% if d.dscr %}
+                <h2>Description:</h2>
+                <p>{{ d.dscr }}</p>
+                {% endif %}
+            </div>
+
+            <div style="display:flex; justify-content: end; align-items: start; flex:1;">
+                <img style="height: 200px;" src="{{ url_for('static', filename='pics/prof.jpg') }}">
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
